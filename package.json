@@ -1,0 +1,17 @@
+{
+  "name": "medicare-360",
+  "version": "1.0.0",
+  "description": "MediCare 360 - Smart Healthcare Management System",
+  "type": "module",
+  "scripts": {
+    "start": "node run-all.js",
+    "seed": "cd server && npm run seed",
+    "test": "cd server && npm test",
+    "server": "cd server && npm start",
+    "client": "cd client && npm run dev",
+    "build": "cd client && npm run build"
+  },
+  "keywords": ["healthcare", "react", "express", "mongodb", "mongoose", "hospital-management"],
+  "author": "MediCare 360 Team",
+  "license": "MIT"
+}
