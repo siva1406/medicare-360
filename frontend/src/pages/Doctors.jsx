@@ -9,19 +9,14 @@ import {
   CheckCircle2, 
   XCircle, 
   Stethoscope, 
-  AlertCircle, 
-  RefreshCw, 
   ArrowUpDown, 
-  Sparkles,
   MapPin,
-  ChevronRight,
   ShieldCheck
 } from 'lucide-react';
 
 export function Doctors({ onSelectDoctorForBooking }) {
   // Pre-loaded with all 45 doctors so they render instantly with zero delay
   const [doctors, setDoctors] = useState(INITIAL_DOCTORS);
-  const [departments, setDepartments] = useState([]);
   const [selectedDept, setSelectedDept] = useState(() => {
     try {
       const hash = window.location.hash || '';
@@ -37,25 +32,18 @@ export function Doctors({ onSelectDoctorForBooking }) {
   const [search, setSearch] = useState('');
   const [availableOnly, setAvailableOnly] = useState(false);
   const [sortBy, setSortBy] = useState('rating'); // 'rating', 'experience', 'fee-asc', 'fee-desc', 'name'
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const fetchDoctorData = () => {
-    setLoading(true);
-    setError(null);
     Promise.all([api.getDoctors(), api.getDepartments()])
-      .then(([docs, depts]) => {
+      .then(([docs]) => {
         const docList = Array.isArray(docs) && docs.length > 0 ? docs : (docs?.doctors?.length ? docs.doctors : INITIAL_DOCTORS);
-        const deptList = Array.isArray(depts) && depts.length > 0 ? depts : (depts?.departments || []);
         setDoctors(docList);
-        setDepartments(deptList);
       })
       .catch((err) => {
         console.warn('Backend sync notice (using active local roster):', err.message);
         // Fallback guarantees all 45 doctors stay available
         setDoctors(INITIAL_DOCTORS);
-      })
-      .finally(() => setLoading(false));
+      });
   };
 
   useEffect(() => {

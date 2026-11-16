@@ -65121,6 +65121,42 @@
       "id": "6afad4c605e69b41cb09230a",
       "updatedAt": "2026-11-16T10:02:46.572Z",
       "createdAt": "2026-11-16T10:02:46.572Z"
+    },
+    {
+      "userId": "6af955b071a8126ff1fc6a3a",
+      "message": "Appointment scheduled with Dr. Dr. Sarah Jenkins for 2026-12-18 at 10:00 (Status: pending).",
+      "type": "appointment",
+      "_id": "6afad702192ca58eb3ed33c8",
+      "id": "6afad702192ca58eb3ed33c8",
+      "updatedAt": "2026-11-16T10:12:18.758Z",
+      "createdAt": "2026-11-16T10:12:18.758Z"
+    },
+    {
+      "userId": "6af955af1633c93f05bc62ab",
+      "message": "New appointment booking received from patient for 2026-12-18 at 10:00.",
+      "type": "appointment",
+      "_id": "6afad702b652b7396e39b75f",
+      "id": "6afad702b652b7396e39b75f",
+      "updatedAt": "2026-11-16T10:12:18.792Z",
+      "createdAt": "2026-11-16T10:12:18.792Z"
+    },
+    {
+      "userId": "6af955b071a8126ff1fc6a3a",
+      "message": "A new hospital invoice of ₹2,000 has been generated. Status: unpaid.",
+      "type": "billing",
+      "_id": "6afad70239d6ddf6c6c9e606",
+      "id": "6afad70239d6ddf6c6c9e606",
+      "updatedAt": "2026-11-16T10:12:18.897Z",
+      "createdAt": "2026-11-16T10:12:18.897Z"
+    },
+    {
+      "userId": "6af955b071a8126ff1fc6a3a",
+      "message": "Payment of ₹2,000 received via UPI for Invoice #fd82bd.",
+      "type": "billing",
+      "_id": "6afad702074a7479e37ae730",
+      "id": "6afad702074a7479e37ae730",
+      "updatedAt": "2026-11-16T10:12:18.984Z",
+      "createdAt": "2026-11-16T10:12:18.984Z"
     }
   ],
   "AuditLog": [
@@ -67186,6 +67222,111 @@
       "id": "6afad4c6e7b86582a88d504e",
       "updatedAt": "2026-11-16T10:02:46.600Z",
       "createdAt": "2026-11-16T10:02:46.600Z"
+    },
+    {
+      "userId": null,
+      "action": "LOGIN",
+      "resource": "User",
+      "details": {
+        "userId": "6af955af19c7dd3a2d68de80",
+        "email": "admin@medicare360.com"
+      },
+      "ipAddress": "127.0.0.1",
+      "_id": "6afad702936797463344eb34",
+      "id": "6afad702936797463344eb34",
+      "updatedAt": "2026-11-16T10:12:18.481Z",
+      "createdAt": "2026-11-16T10:12:18.481Z"
+    },
+    {
+      "userId": null,
+      "action": "LOGIN",
+      "resource": "User",
+      "details": {
+        "userId": "6af955b071a8126ff1fc6a3a",
+        "email": "patient@medicare360.com"
+      },
+      "ipAddress": "127.0.0.1",
+      "_id": "6afad70299d5cbc30f0cf3ff",
+      "id": "6afad70299d5cbc30f0cf3ff",
+      "updatedAt": "2026-11-16T10:12:18.515Z",
+      "createdAt": "2026-11-16T10:12:18.515Z"
+    },
+    {
+      "userId": null,
+      "action": "LOGIN",
+      "resource": "User",
+      "details": {
+        "userId": "6af955af1633c93f05bc62ab",
+        "email": "doctor@medicare360.com"
+      },
+      "ipAddress": "127.0.0.1",
+      "_id": "6afad702f4a5a132e03d525f",
+      "id": "6afad702f4a5a132e03d525f",
+      "updatedAt": "2026-11-16T10:12:18.549Z",
+      "createdAt": "2026-11-16T10:12:18.549Z"
+    },
+    {
+      "userId": null,
+      "action": "LOGIN",
+      "resource": "User",
+      "details": {
+        "userId": "6af955af5823b33ecb30d192",
+        "email": "receptionist@medicare360.com"
+      },
+      "ipAddress": "127.0.0.1",
+      "_id": "6afad7024b6a81db21f1c606",
+      "id": "6afad7024b6a81db21f1c606",
+      "updatedAt": "2026-11-16T10:12:18.580Z",
+      "createdAt": "2026-11-16T10:12:18.580Z"
+    },
+    {
+      "userId": "6af955b071a8126ff1fc6a3a",
+      "action": "BOOK_APPOINTMENT",
+      "resource": "Appointment",
+      "details": {
+        "appointmentId": "6afad702b2692e7e09246c1b",
+        "patientId": "6af955b071a8126ff1fc6a3a",
+        "doctorId": "6af955af1633c93f05bc62ab",
+        "date": "2026-12-18",
+        "slotTime": "10:00"
+      },
+      "ipAddress": "127.0.0.1",
+      "_id": "6afad702acc1b35be6c43421",
+      "id": "6afad702acc1b35be6c43421",
+      "updatedAt": "2026-11-16T10:12:18.820Z",
+      "createdAt": "2026-11-16T10:12:18.820Z"
+    },
+    {
+      "userId": "6af955af5823b33ecb30d192",
+      "action": "CREATE_BILL",
+      "resource": "Bill",
+      "details": {
+        "billId": "6afad702400bf5b1d6fd82bd",
+        "patientId": "6af955b071a8126ff1fc6a3a",
+        "totalAmount": 2000,
+        "paymentStatus": "unpaid"
+      },
+      "ipAddress": "127.0.0.1",
+      "_id": "6afad7021592f99486cd2e28",
+      "id": "6afad7021592f99486cd2e28",
+      "updatedAt": "2026-11-16T10:12:18.929Z",
+      "createdAt": "2026-11-16T10:12:18.929Z"
+    },
+    {
+      "userId": "6af955af5823b33ecb30d192",
+      "action": "RECORD_PAYMENT",
+      "resource": "Bill",
+      "details": {
+        "billId": "6afad702400bf5b1d6fd82bd",
+        "amount": 2000,
+        "paymentMode": "upi",
+        "paymentStatus": "paid"
+      },
+      "ipAddress": "127.0.0.1",
+      "_id": "6afad703b12430a2bfad9350",
+      "id": "6afad703b12430a2bfad9350",
+      "updatedAt": "2026-11-16T10:12:19.016Z",
+      "createdAt": "2026-11-16T10:12:19.016Z"
     }
   ],
   "Leave": []

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { INITIAL_DOCTORS } from '../data/doctorsData';
 import { Calendar, Clock, User, Phone, CheckCircle, X, Stethoscope, AlertCircle } from 'lucide-react';
 
 function to24HourTime(str) {
@@ -20,7 +21,7 @@ function to24HourTime(str) {
 
 export function BookAppointmentModal({ isOpen, onClose, selectedDoctor, onBookingSuccess }) {
   const { user, showToast } = useAuth();
-  const [doctors, setDoctors] = useState([]);
+  const [doctors, setDoctors] = useState(INITIAL_DOCTORS);
   const [doctorId, setDoctorId] = useState('');
   const [patientName, setPatientName] = useState('');
   const [patientPhone, setPatientPhone] = useState('');

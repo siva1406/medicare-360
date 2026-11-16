@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from '../components/Router';
 import { api } from '../services/api';
+import { INITIAL_DOCTORS } from '../data/doctorsData';
 import { 
   Activity, 
   Calendar, 
@@ -20,7 +21,7 @@ import {
 } from 'lucide-react';
 
 export function Home({ onOpenSmartRecommender, onOpenBookingModal }) {
-  const [featuredDoctors, setFeaturedDoctors] = useState([]);
+  const [featuredDoctors, setFeaturedDoctors] = useState(() => INITIAL_DOCTORS.slice(0, 4));
 
   useEffect(() => {
     api.getDoctors()
