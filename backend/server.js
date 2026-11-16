@@ -482,14 +482,21 @@ app.post('/api/ai/recommend', (req, res) => {
   });
 });
 
-// Serve frontend static build if available
+// Serve frontend static build if available (supports client/dist and frontend/dist)
+const clientDist = path.join(__dirname, '..', 'client', 'dist');
 const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
-if (fs.existsSync(frontendDist)) {
-  app.use(express.static(frontendDist));
+const staticDist = fs.existsSync(clientDist) ? clientDist : (fs.existsSync(frontendDist) ? frontendDist : null);
+
+if (staticDist) {
+  app.use(express.static(staticDist, { maxAge: '1d', etag: true }));
   app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api')) {
-      res.sendFile(path.join(frontendDist, 'index.html'));
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return;
     }
+    if (path.extname(req.path)) {
+      return res.status(404).send('Static asset not found');
+    }
+    res.sendFile(path.join(staticDist, 'index.html'));
   });
 }
 

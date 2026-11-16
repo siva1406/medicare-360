@@ -502,3 +502,95 @@ export const recommendDoctors = async (req, res, next) => {
     next(err);
   }
 };
+
+export const createDoctor = async (req, res, next) => {
+  try {
+    const { name, email, phone, department, qualification, experience, fee, room, bio } = req.body;
+    
+    let deptObj = await Department.findOne({
+      $or: [
+        { name: { $regex: department || 'General Medicine', $options: 'i' } }
+      ]
+    });
+    if (!deptObj) {
+      deptObj = await Department.findOne() || await Department.create({ name: 'General Medicine', code: 'GEN' });
+    }
+
+    const docEmail = email || `doctor.${Date.now()}@medicare360.com`;
+    const user = await User.create({
+      name: name || 'Specialist Doctor',
+      email: docEmail,
+      phone: phone || '+91 98000 00000',
+      password: 'doctor123',
+      role: 'doctor',
+      isActive: true,
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'Doctor')}&background=0284c7&color=fff`
+    });
+
+    const expYears = parseInt(experience, 10) || 5;
+    const profile = await DoctorProfile.create({
+      userId: user._id,
+      departmentId: deptObj._id,
+      specialization: `${deptObj.name} Specialist`,
+      qualification: qualification || 'MBBS, MD',
+      experienceYears: expYears,
+      consultationFee: Number(fee) || 500,
+      bio: bio || `Senior medical consultant in ${deptObj.name}.`,
+      rating: 4.9
+    });
+
+    for (let day = 1; day <= 5; day++) {
+      await Availability.create({
+        doctorId: user._id,
+        dayOfWeek: day,
+        slots: [
+          { startTime: '09:00', endTime: '09:30', maxPatients: 3 },
+          { startTime: '10:00', endTime: '10:30', maxPatients: 3 },
+          { startTime: '11:00', endTime: '11:30', maxPatients: 3 },
+          { startTime: '14:00', endTime: '14:30', maxPatients: 3 },
+          { startTime: '15:00', endTime: '15:30', maxPatients: 3 }
+        ],
+        isActive: true
+      });
+    }
+
+    res.status(201).json({
+      success: true,
+      message: 'Doctor created successfully',
+      doctor: {
+        _id: user._id,
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        department: deptObj.name,
+        departmentId: deptObj._id,
+        specialization: profile.specialization,
+        qualification: profile.qualification,
+        experience: `${expYears} Years`,
+        fee: profile.consultationFee,
+        rating: 4.9,
+        available: true,
+        room: room || 'OPD-102',
+        bio: profile.bio
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteDoctor = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await User.findByIdAndUpdate(id, { isActive: false });
+    await DoctorProfile.deleteOne({ userId: id });
+    await Availability.deleteMany({ doctorId: id });
+    res.json({
+      success: true,
+      message: 'Doctor removed successfully'
+    });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -324,37 +324,53 @@ export function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {doctors.map((doc) => (
-                    <tr key={doc.id} className="hover:bg-slate-50/80">
-                      <td className="p-3.5 flex items-center gap-3">
-                        <img src={doc.avatar} alt={doc.name} className="w-8 h-8 rounded-lg object-cover" />
-                        <div>
-                          <span className="font-bold text-slate-900 block">{doc.name}</span>
-                          <span className="text-slate-400 text-[10px]">{doc.email}</span>
-                        </div>
-                      </td>
-                      <td className="p-3.5 font-semibold text-sky-700">{doc.department}</td>
-                      <td className="p-3.5 text-slate-600">{doc.experience}</td>
-                      <td className="p-3.5 font-bold text-slate-900">₹{doc.fee}</td>
-                      <td className="p-3.5 text-slate-600">{doc.room}</td>
-                      <td className="p-3.5">
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                          doc.available ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
-                        }`}>
-                          {doc.available ? 'Active' : 'Off-duty'}
-                        </span>
-                      </td>
-                      <td className="p-3.5 text-right">
-                        <button
-                          onClick={() => handleDeleteDoctor(doc.id, doc.name)}
-                          className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition cursor-pointer"
-                          title="Remove Doctor"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {doctors.map((doc, idx) => {
+                    const docId = doc._id || doc.id || `doc-${idx}`;
+                    const docName = doc.name || 'Specialist Doctor';
+                    const avatarUrl = doc.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
+                    const deptDisplay = typeof doc.department === 'string' ? doc.department : doc.department?.name || 'General Medicine';
+                    const docExp = doc.experience || (doc.experienceYears ? `${doc.experienceYears} Years` : '5+ Years');
+                    const docFee = doc.consultationFee ?? doc.fee ?? 500;
+
+                    return (
+                      <tr key={docId} className="hover:bg-slate-50/80">
+                        <td className="p-3.5 flex items-center gap-3">
+                          <img
+                            src={avatarUrl}
+                            alt={docName}
+                            className="w-8 h-8 rounded-lg object-cover bg-sky-50 border border-slate-100"
+                            onError={(e) => {
+                              e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
+                            }}
+                          />
+                          <div>
+                            <span className="font-bold text-slate-900 block">{docName}</span>
+                            <span className="text-slate-400 text-[10px]">{doc.email}</span>
+                          </div>
+                        </td>
+                        <td className="p-3.5 font-semibold text-sky-700">{deptDisplay}</td>
+                        <td className="p-3.5 text-slate-600">{docExp}</td>
+                        <td className="p-3.5 font-bold text-slate-900">₹{docFee}</td>
+                        <td className="p-3.5 text-slate-600">{doc.room || 'OPD-102'}</td>
+                        <td className="p-3.5">
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                            doc.available ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
+                          }`}>
+                            {doc.available ? 'Active' : 'Off-duty'}
+                          </span>
+                        </td>
+                        <td className="p-3.5 text-right">
+                          <button
+                            onClick={() => handleDeleteDoctor(docId, docName)}
+                            className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition cursor-pointer"
+                            title="Remove Doctor"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

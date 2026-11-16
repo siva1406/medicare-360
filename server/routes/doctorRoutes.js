@@ -7,7 +7,9 @@ import {
   updateAvailability,
   addDoctorLeave,
   getDoctorStats,
-  recommendDoctors
+  recommendDoctors,
+  createDoctor,
+  deleteDoctor
 } from '../controllers/doctorController.js';
 import { authenticate } from '../middleware/auth.js';
 import { authorize } from '../middleware/rbac.js';
@@ -18,7 +20,7 @@ const router = express.Router();
 router.get('/', getDoctors);
 
 // Smart Doctor Recommendation
-router.get('/recommend', recommendDoctors);
+router.all('/recommend', recommendDoctors);
 
 // Doctor availability check
 router.get('/:id/availability', getDoctorAvailability);
@@ -26,7 +28,9 @@ router.get('/:id/availability', getDoctorAvailability);
 // Doctor details
 router.get('/:id', getDoctorById);
 
-// Protected routes
+// Protected routes (Admin / Doctor)
+router.post('/', authenticate, authorize('admin'), createDoctor);
+router.delete('/:id', authenticate, authorize('admin'), deleteDoctor);
 router.put('/:id', authenticate, authorize('doctor', 'admin'), updateDoctor);
 router.put('/:id/availability', authenticate, authorize('doctor', 'admin'), updateAvailability);
 router.post('/:id/leave', authenticate, authorize('doctor', 'admin'), addDoctorLeave);

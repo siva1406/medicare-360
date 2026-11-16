@@ -1,4 +1,4 @@
-const API_BASE = '/api';
+const API_BASE = (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/$/, '') : '') + '/api';
 
 async function request(endpoint, options = {}) {
   const token = localStorage.getItem('medicare_token');
@@ -117,10 +117,15 @@ export const api = {
     method: 'POST',
     body: JSON.stringify(billData)
   }),
-  payBilling: (id, mode) => request(`/billing/${id}/pay`, {
-    method: 'PATCH',
-    body: JSON.stringify({ paidAmount: 2000, paymentMode: mode || 'upi' })
-  }),
+  payBilling: (id, paymentData) => {
+    const payload = typeof paymentData === 'object' 
+      ? paymentData 
+      : { paymentMode: paymentData || 'cash' };
+    return request(`/billing/${id}/pay`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload)
+    });
+  },
 
   // Admin Stats
   getAdminStats: () => request('/admin/stats'),

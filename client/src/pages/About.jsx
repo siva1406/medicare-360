@@ -71,6 +71,9 @@ export function About() {
                 src={l.img}
                 alt={l.name}
                 className="w-24 h-24 rounded-2xl mx-auto object-cover mb-4 border-2 border-sky-100 shadow-xs"
+                onError={(e) => {
+                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(l.name)}&background=0284c7&color=fff`;
+                }}
               />
               <h4 className="text-sm font-bold text-slate-900">{l.name}</h4>
               <p className="text-xs text-sky-700 font-semibold mt-0.5">{l.role}</p>

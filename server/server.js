@@ -3,6 +3,7 @@ dotenv.config();
 
 import app from './app.js';
 import { connectDB } from './config/db.js';
+import { autoSeedIfEmpty } from './seed/seed.js';
 import { startReminderJob } from './cron/reminders.js';
 
 const PORT = process.env.PORT || 5000;
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 5000;
 async function startServer() {
   try {
     await connectDB();
+    await autoSeedIfEmpty();
     startReminderJob();
 
     app.listen(PORT, () => {

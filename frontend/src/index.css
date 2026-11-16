@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+@theme {
+  --color-medblue-50: #f0f9ff;
+  --color-medblue-100: #e0f2fe;
+  --color-medblue-200: #bae6fd;
+  --color-medblue-300: #7dd3fc;
+  --color-medblue-400: #38bdf8;
+  --color-medblue-500: #0ea5e9;
+  --color-medblue-600: #0284c7;
+  --color-medblue-700: #0369a1;
+  --color-medblue-800: #075985;
+  --color-medblue-900: #0c4a6e;
+  --color-medblue-950: #082f49;
+
+  --color-medteal-50: #f0fdfa;
+  --color-medteal-100: #ccfbf1;
+  --color-medteal-200: #99f6e4;
+  --color-medteal-300: #5eead4;
+  --color-medteal-400: #2dd4bf;
+  --color-medteal-500: #14b8a6;
+  --color-medteal-600: #0d9488;
+  --color-medteal-700: #0f766e;
+  --color-medteal-800: #115e59;
+  --color-medteal-900: #134e4a;
+
+  --shadow-soft: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 4px 20px -2px rgba(2, 132, 199, 0.08);
+}
+
 @layer base {
   :root {
     --primary-blue: #0284c7;

@@ -40,7 +40,7 @@ const DOCTOR_NAMES = [
   'Dr. Tarun Khanna', 'Dr. Sneha Pillai', 'Dr. Richard Moore', 'Dr. Vandana Agarwal', 'Dr. George Baker'
 ];
 
-async function seedDatabase() {
+export async function seedDatabase(shouldExit = false) {
   try {
     console.log('--- Starting MediCare 360 Database Seeder ---');
     await connectDB();
@@ -405,12 +405,31 @@ async function seedDatabase() {
     console.log(`  Total Revenue:      ₹${liveRevenue.toLocaleString('en-IN')} (Target: ₹4,50,000)`);
     console.log('================================================================');
 
-    await disconnectDB();
-    process.exit(0);
+    if (shouldExit) {
+      await disconnectDB();
+      process.exit(0);
+    }
   } catch (err) {
     console.error('Database seeding failed:', err);
-    process.exit(1);
+    if (shouldExit) process.exit(1);
+    throw err;
   }
 }
 
-seedDatabase();
+export async function autoSeedIfEmpty() {
+  try {
+    const count = await DoctorProfile.countDocuments();
+    if (count === 0) {
+      console.log('🌱 No doctors found in database. Initializing automated seed...');
+      await seedDatabase(false);
+      console.log('✓ Automatic database seeding finished successfully.');
+    }
+  } catch (err) {
+    console.warn('⚠️ Auto-seed check notice:', err.message);
+  }
+}
+
+// Auto-run if executed directly via CLI
+if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('seed/seed.js')) {
+  seedDatabase(true);
+}

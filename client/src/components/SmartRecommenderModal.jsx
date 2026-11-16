@@ -6,6 +6,7 @@ export function SmartRecommenderModal({ isOpen, onClose, onSelectDoctor }) {
   const [symptoms, setSymptoms] = useState('');
   const [age, setAge] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
 
   if (!isOpen) return null;
@@ -22,12 +23,14 @@ export function SmartRecommenderModal({ isOpen, onClose, onSelectDoctor }) {
     if (e) e.preventDefault();
     if (!symptoms.trim()) return;
 
+    setError(null);
     setLoading(true);
     try {
       const data = await api.recommendDoctor({ symptoms, age });
       setResult(data);
     } catch (err) {
       console.error(err);
+      setError(err.message || 'Unable to connect to AI triage. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -119,6 +122,14 @@ export function SmartRecommenderModal({ isOpen, onClose, onSelectDoctor }) {
             </div>
           </form>
 
+          {/* Error Message */}
+          {error && (
+            <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center gap-2.5 text-xs text-rose-700 animate-in fade-in">
+              <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
+
           {/* AI Result Card */}
           {result && (() => {
             const docList = Array.isArray(result.doctors)
@@ -143,51 +154,58 @@ export function SmartRecommenderModal({ isOpen, onClose, onSelectDoctor }) {
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3">
                     Available Specialists in {deptName}
                   </h4>
-                  <div className="space-y-3">
-                    {docList.map((doc) => {
-                      const docId = doc._id || doc.id;
-                      const avatarUrl = doc.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(doc.name)}&background=0284c7&color=fff`;
-                      const exp = doc.experience || (doc.experienceYears ? `${doc.experienceYears} Years` : '5+ Years');
-                      const fee = doc.consultationFee ?? doc.fee ?? 500;
-                      return (
-                        <div
-                          key={docId}
-                          className="p-3.5 rounded-xl border border-slate-200 hover:border-teal-400 bg-white hover:shadow-md transition flex items-center justify-between gap-4"
-                        >
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={avatarUrl}
-                              alt={doc.name}
-                              className="w-12 h-12 rounded-xl object-cover border border-slate-200 bg-sky-50"
-                              onError={(e) => {
-                                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(doc.name)}&background=0284c7&color=fff`;
-                              }}
-                            />
-                            <div>
-                              <h5 className="text-sm font-bold text-slate-900">{doc.name}</h5>
-                              <p className="text-xs text-slate-500">{doc.department} • {exp}</p>
-                              <div className="flex items-center gap-2 text-[11px] text-teal-700 font-medium mt-0.5">
-                                <Clock className="w-3 h-3 text-teal-500" />
-                                <span>{doc.timing || '09:00 AM - 05:00 PM'}</span>
-                                <span className="text-slate-400">•</span>
-                                <span className="font-bold text-slate-800">₹{fee}</span>
+                  {docList.length === 0 ? (
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center text-xs text-slate-500">
+                      No specific specialists currently listed for this query. You can schedule a consultation with our General Medicine department.
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {docList.map((doc, idx) => {
+                        const docId = doc._id || doc.id || `doc-${idx}`;
+                        const docName = doc.name || 'Specialist Physician';
+                        const avatarUrl = doc.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
+                        const exp = doc.experience || (doc.experienceYears ? `${doc.experienceYears} Years` : '5+ Years');
+                        const fee = doc.consultationFee ?? doc.fee ?? 500;
+                        return (
+                          <div
+                            key={docId}
+                            className="p-3.5 rounded-xl border border-slate-200 hover:border-teal-400 bg-white hover:shadow-md transition flex items-center justify-between gap-4"
+                          >
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={avatarUrl}
+                                alt={docName}
+                                className="w-12 h-12 rounded-xl object-cover border border-slate-200 bg-sky-50"
+                                onError={(e) => {
+                                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
+                                }}
+                              />
+                              <div>
+                                <h5 className="text-sm font-bold text-slate-900">{docName}</h5>
+                                <p className="text-xs text-slate-500">{doc.department || deptName} • {exp}</p>
+                                <div className="flex items-center gap-2 text-[11px] text-teal-700 font-medium mt-0.5">
+                                  <Clock className="w-3 h-3 text-teal-500" />
+                                  <span>{doc.timing || '09:00 AM - 05:00 PM'}</span>
+                                  <span className="text-slate-400">•</span>
+                                  <span className="font-bold text-slate-800">₹{fee}</span>
+                                </div>
                               </div>
                             </div>
+                            <button
+                              onClick={() => {
+                                onClose();
+                                if (onSelectDoctor) onSelectDoctor(doc);
+                              }}
+                              className="px-3.5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs cursor-pointer shrink-0"
+                            >
+                              <span>Book Slot</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </button>
                           </div>
-                          <button
-                            onClick={() => {
-                              onClose();
-                              if (onSelectDoctor) onSelectDoctor(doc);
-                            }}
-                            className="px-3.5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs cursor-pointer shrink-0"
-                          >
-                            <span>Book Slot</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             );

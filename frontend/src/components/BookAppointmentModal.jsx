@@ -179,10 +179,10 @@ export function BookAppointmentModal({ isOpen, onClose, selectedDoctor, onBookin
             <div className="p-3.5 rounded-xl bg-sky-50/80 border border-sky-100 flex items-center gap-3">
               <img
                 src={activeDocAvatar}
-                alt={activeDoc.name}
+                alt={activeDoc?.name || 'Doctor'}
                 className="w-12 h-12 rounded-lg object-cover border border-sky-200 bg-white"
                 onError={(e) => {
-                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(activeDoc.name)}&background=0284c7&color=fff`;
+                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(activeDoc?.name || 'Doctor')}&background=0284c7&color=fff`;
                 }}
               />
               <div className="text-xs">

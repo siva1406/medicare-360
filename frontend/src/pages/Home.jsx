@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from '../components/Router';
+import { api } from '../services/api';
 import { 
   Activity, 
   Calendar, 
@@ -19,6 +20,17 @@ import {
 } from 'lucide-react';
 
 export function Home({ onOpenSmartRecommender, onOpenBookingModal }) {
+  const [featuredDoctors, setFeaturedDoctors] = useState([]);
+
+  useEffect(() => {
+    api.getDoctors()
+      .then((docs) => {
+        const list = Array.isArray(docs) ? docs : (docs?.doctors || []);
+        setFeaturedDoctors(list.slice(0, 4));
+      })
+      .catch(console.error);
+  }, []);
+
   const stats = [
     { label: 'Happy Treated Patients', value: '1,250+', icon: Users },
     { label: 'Board-Certified Doctors', value: '45+', icon: Stethoscope },
@@ -236,6 +248,76 @@ export function Home({ onOpenSmartRecommender, onOpenBookingModal }) {
                   {dept.count}
                 </span>
                 <p className="text-xs text-slate-500 leading-relaxed">{dept.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Featured Specialist Doctors Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <span className="text-xs font-bold text-sky-600 uppercase tracking-wider">Board-Certified Faculty</span>
+            <h2 className="text-3xl font-extrabold text-slate-900 mt-1">Meet Our Specialist Doctors</h2>
+            <p className="text-xs text-slate-500 mt-1">Book direct consultations with senior physicians and surgeons across disciplines.</p>
+          </div>
+          <Link to="/doctors" className="text-sm font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1">
+            <span>Browse All 45+ Doctors</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {featuredDoctors.map((doc, idx) => {
+            const docId = doc._id || doc.id || `doc-${idx}`;
+            const docName = doc.name || 'Specialist Doctor';
+            const avatarUrl = doc.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
+            const docExp = doc.experience || (doc.experienceYears ? `${doc.experienceYears} Years` : '5+ Years');
+            const docFee = doc.consultationFee ?? doc.fee ?? 500;
+            const deptDisplay = typeof doc.department === 'string' ? doc.department : doc.department?.name || 'General Medicine';
+
+            return (
+              <div
+                key={docId}
+                className="bg-white rounded-2xl border border-slate-200 hover:border-sky-300 hover:shadow-card transition flex flex-col justify-between p-5"
+              >
+                <div>
+                  <img
+                    src={avatarUrl}
+                    alt={docName}
+                    className="w-20 h-20 rounded-2xl object-cover mb-4 border-2 border-slate-100 bg-sky-50 mx-auto"
+                    onError={(e) => {
+                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
+                    }}
+                  />
+                  <div className="text-center space-y-1">
+                    <h3 className="font-bold text-slate-900 text-sm">{docName}</h3>
+                    <span className="text-xs font-semibold text-sky-700 block">{deptDisplay}</span>
+                    <p className="text-[11px] text-slate-500">{doc.qualification || 'MBBS, MD'}</p>
+                    <div className="flex items-center justify-center gap-2 pt-1 text-xs">
+                      <span className="flex items-center gap-1 font-bold text-amber-500 text-[11px]">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <span>{doc.rating || 4.9}</span>
+                      </span>
+                      <span className="text-slate-300">•</span>
+                      <span className="text-[11px] text-slate-500">{docExp} Exp</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <div>
+                    <span className="text-slate-400 text-[10px] block">Fee:</span>
+                    <span className="font-bold text-slate-900">₹{docFee}</span>
+                  </div>
+                  <button
+                    onClick={() => onOpenBookingModal && onOpenBookingModal(doc)}
+                    className="px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs transition cursor-pointer shadow-xs"
+                  >
+                    Book Slot
+                  </button>
+                </div>
               </div>
             );
           })}

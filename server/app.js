@@ -25,7 +25,8 @@ const app = express();
 
 // Security Middleware
 app.use(helmet({
-  crossOriginResourcePolicy: false
+  crossOriginResourcePolicy: false,
+  contentSecurityPolicy: false
 }));
 
 // CORS Middleware
@@ -66,15 +67,22 @@ app.use('/api/billing', billingRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
 
-// Static client build serving
+// Static client build serving (supports both client/dist and frontend/dist)
 const clientDistPath = path.resolve(__dirname, '../client/dist');
-if (fs.existsSync(clientDistPath)) {
-  app.use(express.static(clientDistPath));
+const frontendDistPath = path.resolve(__dirname, '../frontend/dist');
+const staticPath = fs.existsSync(clientDistPath) ? clientDistPath : (fs.existsSync(frontendDistPath) ? frontendDistPath : null);
+
+if (staticPath) {
+  app.use(express.static(staticPath, { maxAge: '1d', etag: true }));
   app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
       return next();
     }
-    res.sendFile(path.join(clientDistPath, 'index.html'));
+    // Prevent MIME-type mismatch: missing static assets (.css, .js, .png, etc.) must 404, not return HTML!
+    if (path.extname(req.path)) {
+      return res.status(404).send('Static asset not found');
+    }
+    res.sendFile(path.join(staticPath, 'index.html'));
   });
 }
 
