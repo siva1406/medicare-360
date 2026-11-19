@@ -30,15 +30,15 @@ export function Departments({ onOpenBookingModal }) {
   };
 
   return (
-    <div className="py-12 space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
-      <div className="text-center max-w-3xl mx-auto space-y-4">
+    <div className="py-8 sm:py-12 space-y-8 sm:space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
+      <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
         <span className="px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold uppercase tracking-wider">
           Specialized Medical Wings
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           Hospital Departments
         </h1>
-        <p className="text-slate-600 text-sm leading-relaxed">
+        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
           Each department is led by experienced senior consultants, staffed by dedicated healthcare professionals, and supported by modern diagnostic laboratories.
         </p>
       </div>
@@ -51,7 +51,7 @@ export function Departments({ onOpenBookingModal }) {
             const Icon = iconMap[dept.icon] || Stethoscope;
             const docNum = dept.doctorCount ?? dept.doctorsCount ?? 0;
             return (
-              <div key={dept._id || dept.id || dept.name} className="p-6 bg-white rounded-2xl border border-slate-200 hover:border-sky-300 hover:shadow-card transition flex flex-col justify-between">
+              <div key={dept._id || dept.id || dept.name} className="p-5 sm:p-6 bg-white rounded-2xl border border-slate-200 hover:border-sky-300 hover:shadow-card transition flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
@@ -67,17 +67,17 @@ export function Departments({ onOpenBookingModal }) {
                   <p className="text-xs text-slate-500 leading-relaxed mb-6">{dept.description}</p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
                   <Link
                     to={`/doctors?department=${encodeURIComponent(dept.name)}`}
-                    className="text-xs font-bold text-slate-700 hover:text-sky-600 flex items-center gap-1"
+                    className="text-xs font-bold text-slate-700 hover:text-sky-600 flex items-center gap-1 min-tap"
                   >
                     <span>View Doctors</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                   <button
                     onClick={() => onOpenBookingModal && onOpenBookingModal({ department: dept.name, departmentId: dept._id || dept.id })}
-                    className="px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-xs"
+                    className="px-3.5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-xs min-h-[44px]"
                   >
                     <Calendar className="w-3.5 h-3.5" />
                     <span>Book OPD</span>

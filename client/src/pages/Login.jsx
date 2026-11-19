@@ -67,7 +67,7 @@ export function Login() {
         </div>
 
         {/* Demo Fast-Login Selector */}
-        <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-3">
+        <div className="p-4 sm:p-5 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-3">
           <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 text-center">
             ⚡ Quick 1-Click Demo Login
           </p>
@@ -75,7 +75,7 @@ export function Login() {
             <button
               onClick={() => handleDemoSelect('patient')}
               disabled={loading}
-              className="p-3 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100/70 text-emerald-800 font-bold flex flex-col items-center gap-1 transition cursor-pointer"
+              className="p-3 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100/70 text-emerald-800 font-bold flex flex-col items-center justify-center gap-1 transition cursor-pointer min-h-[54px] min-tap"
             >
               <UserCheck className="w-4 h-4 text-emerald-600" />
               <span>Patient Portal</span>
@@ -85,7 +85,7 @@ export function Login() {
             <button
               onClick={() => handleDemoSelect('doctor')}
               disabled={loading}
-              className="p-3 rounded-xl border border-sky-200 bg-sky-50/70 hover:bg-sky-100/70 text-sky-800 font-bold flex flex-col items-center gap-1 transition cursor-pointer"
+              className="p-3 rounded-xl border border-sky-200 bg-sky-50/70 hover:bg-sky-100/70 text-sky-800 font-bold flex flex-col items-center justify-center gap-1 transition cursor-pointer min-h-[54px] min-tap"
             >
               <Stethoscope className="w-4 h-4 text-sky-600" />
               <span>Doctor Portal</span>
@@ -95,7 +95,7 @@ export function Login() {
             <button
               onClick={() => handleDemoSelect('admin')}
               disabled={loading}
-              className="p-3 rounded-xl border border-purple-200 bg-purple-50/70 hover:bg-purple-100/70 text-purple-800 font-bold flex flex-col items-center gap-1 transition cursor-pointer"
+              className="p-3 rounded-xl border border-purple-200 bg-purple-50/70 hover:bg-purple-100/70 text-purple-800 font-bold flex flex-col items-center justify-center gap-1 transition cursor-pointer min-h-[54px] min-tap"
             >
               <Building2 className="w-4 h-4 text-purple-600" />
               <span>Admin Console</span>
@@ -105,7 +105,7 @@ export function Login() {
             <button
               onClick={() => handleDemoSelect('receptionist')}
               disabled={loading}
-              className="p-3 rounded-xl border border-amber-200 bg-amber-50/70 hover:bg-amber-100/70 text-amber-800 font-bold flex flex-col items-center gap-1 transition cursor-pointer"
+              className="p-3 rounded-xl border border-amber-200 bg-amber-50/70 hover:bg-amber-100/70 text-amber-800 font-bold flex flex-col items-center justify-center gap-1 transition cursor-pointer min-h-[54px] min-tap"
             >
               <Receipt className="w-4 h-4 text-amber-600" />
               <span>Reception Desk</span>
@@ -115,7 +115,7 @@ export function Login() {
         </div>
 
         {/* Credentials Form */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-soft">
+        <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-soft">
           <div className="relative mb-5">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200" />
@@ -129,13 +129,13 @@ export function Login() {
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. patient@medicare360.com"
-                  className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                   required
                 />
               </div>
@@ -144,13 +144,13 @@ export function Login() {
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                   required
                 />
               </div>
@@ -159,7 +159,7 @@ export function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-50"
+              className="w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-50 min-h-[44px]"
             >
               {loading ? (
                 <span>Signing in...</span>

@@ -110,20 +110,20 @@ export function PatientDashboard({ onOpenBookingModal }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-[calc(100vh-65px)] bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-65px)] bg-slate-50 w-full overflow-x-hidden">
       <Sidebar currentTab={currentTab} onSelectTab={setCurrentTab} role="patient" />
 
-      <main className="flex-1 p-6 md:p-8 space-y-6 max-w-6xl">
+      <main className="flex-1 p-4 sm:p-6 md:p-8 space-y-6 max-w-6xl w-full pb-28 md:pb-8">
         {/* Welcome Top Banner */}
-        <div className="p-6 bg-gradient-to-r from-sky-600 to-teal-600 rounded-2xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 sm:p-6 bg-gradient-to-r from-sky-600 to-teal-600 rounded-2xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-sky-200">Patient Dashboard</span>
-            <h1 className="text-2xl font-black mt-1">Hello, {user?.name || 'Rajesh Kumar'}!</h1>
+            <h1 className="text-xl sm:text-2xl font-black mt-1">Hello, {user?.name || 'Rajesh Kumar'}!</h1>
             <p className="text-xs text-sky-100 mt-0.5">Manage your clinical consultations, digital prescriptions, and lab tests.</p>
           </div>
           <button
             onClick={() => onOpenBookingModal()}
-            className="px-4 py-2.5 rounded-xl bg-white text-sky-700 font-bold text-xs shadow-md hover:bg-sky-50 transition flex items-center gap-1.5 cursor-pointer shrink-0"
+            className="w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-xl bg-white text-sky-700 font-bold text-xs sm:text-xs shadow-md hover:bg-sky-50 transition flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
           >
             <Plus className="w-4 h-4 text-sky-600" />
             <span>Book New Appointment</span>
@@ -265,14 +265,14 @@ export function PatientDashboard({ onOpenBookingModal }) {
         {/* Tab 3: Medical Reports */}
         {currentTab === 'reports' && (
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="text-base font-bold text-slate-900">Medical Reports & Diagnostics</h3>
                 <p className="text-xs text-slate-500">Secure electronic health records and lab results</p>
               </div>
               <button
                 onClick={() => setUploadModalOpen(true)}
-                className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-xs min-h-[44px]"
               >
                 <UploadCloud className="w-4 h-4" />
                 <span>Upload Medical Report</span>
@@ -303,7 +303,7 @@ export function PatientDashboard({ onOpenBookingModal }) {
                     href={rep.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full py-2 bg-slate-100 hover:bg-teal-50 hover:text-teal-700 text-slate-700 rounded-xl text-xs font-bold text-center block transition"
+                    className="w-full py-2.5 bg-slate-100 hover:bg-teal-50 hover:text-teal-700 text-slate-700 rounded-xl text-xs font-bold text-center block transition min-h-[44px] flex items-center justify-center"
                   >
                     View Document (PDF)
                   </a>
@@ -358,10 +358,19 @@ export function PatientDashboard({ onOpenBookingModal }) {
 
         {/* Upload Report Modal */}
         {uploadModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-            <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-100 space-y-4">
-              <h3 className="text-lg font-bold text-slate-900">Upload Medical Document / Lab Report</h3>
-              <form onSubmit={handleUploadReport} className="space-y-3">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs">
+            <div className="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-6 shadow-2xl border border-slate-100 space-y-4 max-h-[92vh] overflow-y-auto">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900">Upload Medical Document</h3>
+                <button
+                  type="button"
+                  onClick={() => setUploadModalOpen(false)}
+                  className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer min-tap sm:hidden"
+                >
+                  <XCircle className="w-5 h-5" />
+                </button>
+              </div>
+              <form onSubmit={handleUploadReport} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">Report Title *</label>
                   <input
@@ -369,7 +378,7 @@ export function PatientDashboard({ onOpenBookingModal }) {
                     value={reportTitle}
                     onChange={(e) => setReportTitle(e.target.value)}
                     placeholder="e.g. Thyroid Profile Test / Chest X-Ray"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-teal-500 outline-hidden"
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-teal-500 outline-hidden min-h-[44px]"
                     required
                   />
                 </div>
@@ -378,7 +387,7 @@ export function PatientDashboard({ onOpenBookingModal }) {
                   <select
                     value={reportDept}
                     onChange={(e) => setReportDept(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white focus:ring-2 focus:ring-teal-500 outline-hidden"
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs bg-white focus:ring-2 focus:ring-teal-500 outline-hidden min-h-[44px]"
                   >
                     <option value="Biochemistry Lab">Biochemistry Lab</option>
                     <option value="Hematology Lab">Hematology Lab</option>
@@ -393,20 +402,20 @@ export function PatientDashboard({ onOpenBookingModal }) {
                     value={reportNotes}
                     onChange={(e) => setReportNotes(e.target.value)}
                     placeholder="e.g. TSH: 2.4 uIU/mL (Normal), Free T4: 1.2 ng/dL..."
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-teal-500 outline-hidden"
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-teal-500 outline-hidden"
                   />
                 </div>
-                <div className="pt-2 flex justify-end gap-2">
+                <div className="pt-2 flex flex-col-reverse sm:flex-row justify-end gap-2">
                   <button
                     type="button"
                     onClick={() => setUploadModalOpen(false)}
-                    className="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold cursor-pointer"
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold cursor-pointer min-h-[44px]"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold cursor-pointer min-h-[44px] shadow-xs"
                   >
                     Upload Document
                   </button>

@@ -72,13 +72,13 @@ export function DoctorDashboard() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-[calc(100vh-65px)] bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-65px)] bg-slate-50 w-full overflow-x-hidden">
       <Sidebar currentTab={currentTab} onSelectTab={setCurrentTab} role="doctor" />
 
-      <main className="flex-1 p-6 md:p-8 space-y-6 max-w-6xl">
+      <main className="flex-1 p-4 sm:p-6 md:p-8 space-y-6 max-w-6xl w-full pb-28 md:pb-8">
         {/* Doctor Top Hero Card */}
-        <div className="p-6 bg-gradient-to-r from-slate-900 to-sky-900 rounded-2xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
+        <div className="p-5 sm:p-6 bg-gradient-to-r from-slate-900 to-sky-900 rounded-2xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-col xs:flex-row items-center xs:items-start text-center xs:text-left gap-4">
             <img
               src={user?.avatar || "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80"}
               alt="Doctor"
@@ -86,7 +86,7 @@ export function DoctorDashboard() {
             />
             <div>
               <span className="text-xs font-bold text-teal-400 uppercase tracking-wider">Clinician Workspace</span>
-              <h1 className="text-2xl font-black">{user?.name || 'Dr. Priya Sharma'}</h1>
+              <h1 className="text-xl sm:text-2xl font-black">{user?.name || 'Dr. Priya Sharma'}</h1>
               <p className="text-xs text-slate-300">
                 Department of {user?.department || 'Cardiology'} • Suite 302 • OPD 09:00 AM - 02:00 PM
               </p>
@@ -96,7 +96,7 @@ export function DoctorDashboard() {
           {/* Availability Toggle */}
           <button
             onClick={handleToggleAvailability}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-md ${
+            className={`w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md min-h-[44px] ${
               isAvailable
                 ? 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-500/20'
                 : 'bg-rose-600 hover:bg-rose-700 text-white shadow-rose-600/20'
@@ -363,11 +363,11 @@ export function DoctorDashboard() {
 
         {/* Patient Details Modal */}
         {patientDetailModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-            <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-100 space-y-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs">
+            <div className="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-6 shadow-2xl border border-slate-100 space-y-4 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 className="font-bold text-slate-900">Patient Clinical File</h3>
-                <button onClick={() => setPatientDetailModal(null)} className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 cursor-pointer">
+                <button onClick={() => setPatientDetailModal(null)} className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer min-tap">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -384,7 +384,7 @@ export function DoctorDashboard() {
               <div className="pt-2 flex justify-end">
                 <button
                   onClick={() => setPatientDetailModal(null)}
-                  className="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-semibold cursor-pointer min-h-[44px]"
                 >
                   Close File
                 </button>

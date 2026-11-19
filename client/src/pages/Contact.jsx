@@ -15,13 +15,13 @@ export function Contact() {
   };
 
   return (
-    <div className="py-12 space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
+    <div className="py-8 sm:py-12 space-y-8 sm:space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <span className="px-3 py-1 rounded-full bg-teal-50 text-teal-800 text-xs font-bold uppercase tracking-wider">
           Patient Support & Helpdesk
         </span>
-        <h1 className="text-4xl font-black text-slate-900 tracking-tight">Contact MediCare 360</h1>
-        <p className="text-slate-600 text-sm">
+        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">Contact MediCare 360</h1>
+        <p className="text-slate-600 text-xs sm:text-sm">
           Have questions about doctor schedules, admissions, or insurance approvals? Our team is available 24/7.
         </p>
       </div>
@@ -29,7 +29,7 @@ export function Contact() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Hospital Contact Cards */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="p-6 bg-slate-900 text-white rounded-2xl shadow-xl space-y-4">
+          <div className="p-5 sm:p-6 bg-slate-900 text-white rounded-2xl shadow-xl space-y-4">
             <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase tracking-wider">
               <ShieldAlert className="w-4 h-4 animate-pulse" />
               <span>Emergency 24x7 Helpline</span>
@@ -40,7 +40,7 @@ export function Contact() {
             </div>
           </div>
 
-          <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-4 text-sm text-slate-600">
+          <div className="p-5 sm:p-6 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-4 text-sm text-slate-600">
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-sky-600 shrink-0 mt-0.5" />
               <div>
@@ -77,8 +77,8 @@ export function Contact() {
         </div>
 
         {/* Right Column: Contact Form */}
-        <div className="lg:col-span-7 bg-white p-8 rounded-2xl border border-slate-200 shadow-soft">
-          <h3 className="text-xl font-bold text-slate-900 mb-2">Send an Enquiry or Request a Callback</h3>
+        <div className="lg:col-span-7 bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-soft">
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">Send an Enquiry or Request a Callback</h3>
           <p className="text-xs text-slate-500 mb-6">Our patient relationship officer will review and reach out within 30 minutes.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -90,18 +90,18 @@ export function Contact() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Ramesh V"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                   required
                 />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">Contact Phone *</label>
                 <input
-                  type="text"
+                  type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="e.g. +91 98400 12345"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                   required
                 />
               </div>
@@ -115,7 +115,7 @@ export function Contact() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="e.g. ramesh@example.com"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                 />
               </div>
               <div>
@@ -123,7 +123,7 @@ export function Contact() {
                 <select
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm bg-white focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                 >
                   <option value="General Inquiry">General Inquiry</option>
                   <option value="Cardiology">Cardiology Department</option>
@@ -142,14 +142,14 @@ export function Contact() {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Let us know how we can assist you..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="w-full sm:w-auto px-8 py-3 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition cursor-pointer"
+              className="w-full sm:w-auto px-8 py-3.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition cursor-pointer min-h-[44px]"
             >
               <Send className="w-4 h-4" />
               <span>Submit Inquiry</span>

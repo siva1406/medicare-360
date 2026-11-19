@@ -10,23 +10,23 @@ export function About() {
   ];
 
   return (
-    <div className="py-12 space-y-16 max-w-7xl mx-auto px-4 sm:px-8">
+    <div className="py-8 sm:py-12 space-y-10 sm:space-y-16 max-w-7xl mx-auto px-4 sm:px-8">
       {/* Hero */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
+      <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
         <span className="px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold uppercase tracking-wider">
           Excellence in Healthcare Since 2012
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           Pioneering Advanced Medical Care with Human Compassion
         </h1>
-        <p className="text-slate-600 text-base leading-relaxed">
+        <p className="text-slate-600 text-xs sm:text-base leading-relaxed">
           MediCare 360 is Chennai's premier multispecialty tertiary healthcare facility, combining world-class clinical talent, state-of-the-art robotic infrastructure, and compassionate patient-centric design.
         </p>
       </div>
 
       {/* Values & Accreditations */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="p-8 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-3">
+        <div className="p-6 sm:p-8 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-3">
           <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
             <Target className="w-6 h-6" />
           </div>
@@ -36,7 +36,7 @@ export function About() {
           </p>
         </div>
 
-        <div className="p-8 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-3">
+        <div className="p-6 sm:p-8 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-3">
           <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
             <ShieldCheck className="w-6 h-6" />
           </div>
@@ -46,7 +46,7 @@ export function About() {
           </p>
         </div>
 
-        <div className="p-8 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-3">
+        <div className="p-6 sm:p-8 bg-white rounded-2xl border border-slate-200 shadow-soft space-y-3">
           <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
             <Heart className="w-6 h-6" />
           </div>
@@ -60,7 +60,7 @@ export function About() {
       {/* Hospital Leadership */}
       <div className="space-y-8">
         <div className="text-center max-w-xl mx-auto">
-          <h2 className="text-3xl font-extrabold text-slate-900">Hospital Clinical Leadership</h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Hospital Clinical Leadership</h2>
           <p className="text-xs text-slate-500 mt-2">Guided by eminent physicians, surgeons and healthcare administrators.</p>
         </div>
 
@@ -70,6 +70,7 @@ export function About() {
               <img
                 src={l.img}
                 alt={l.name}
+                loading="lazy"
                 className="w-24 h-24 rounded-2xl mx-auto object-cover mb-4 border-2 border-sky-100 shadow-xs"
                 onError={(e) => {
                   e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(l.name)}&background=0284c7&color=fff`;

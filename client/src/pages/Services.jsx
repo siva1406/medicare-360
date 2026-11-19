@@ -24,15 +24,15 @@ export function Services({ onOpenBookingModal }) {
   ];
 
   return (
-    <div className="py-12 space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
-      <div className="text-center max-w-3xl mx-auto space-y-4">
+    <div className="py-8 sm:py-12 space-y-8 sm:space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
+      <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
         <span className="px-3.5 py-1 rounded-full bg-teal-50 text-teal-800 text-xs font-bold uppercase tracking-wider">
           Comprehensive Clinical Services
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           World-Class Medical Solutions Under One Roof
         </h1>
-        <p className="text-slate-600 text-sm leading-relaxed">
+        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
           From preventative wellness checkups to complicated neurosurgeries, MediCare 360 delivers seamless clinical excellence supported by modern medical engineering.
         </p>
       </div>
@@ -41,7 +41,7 @@ export function Services({ onOpenBookingModal }) {
         {services.map((s, i) => {
           const Icon = s.icon;
           return (
-            <div key={i} className="p-6 bg-white rounded-2xl border border-slate-200 hover:border-sky-300 hover:shadow-card transition flex flex-col justify-between">
+            <div key={i} className="p-5 sm:p-6 bg-white rounded-2xl border border-slate-200 hover:border-sky-300 hover:shadow-card transition flex flex-col justify-between">
               <div>
                 <div className={`w-12 h-12 rounded-xl ${s.color} flex items-center justify-center mb-4`}>
                   <Icon className="w-6 h-6" />
@@ -51,7 +51,7 @@ export function Services({ onOpenBookingModal }) {
               </div>
               <button
                 onClick={() => onOpenBookingModal && onOpenBookingModal()}
-                className="text-xs font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1 cursor-pointer pt-2 border-t border-slate-100"
+                className="text-xs font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1 cursor-pointer pt-2 border-t border-slate-100 min-h-[44px] min-tap"
               >
                 <span>Book Service</span>
                 <ArrowRight className="w-3.5 h-3.5" />

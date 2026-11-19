@@ -123,10 +123,10 @@ export function AdminDashboard() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-[calc(100vh-65px)] bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-65px)] bg-slate-50 w-full overflow-x-hidden">
       <Sidebar currentTab={currentTab} onSelectTab={setCurrentTab} role="admin" />
 
-      <main className="flex-1 p-6 md:p-8 space-y-6 max-w-6xl">
+      <main className="flex-1 p-4 sm:p-6 md:p-8 space-y-6 max-w-6xl w-full pb-28 md:pb-8">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -136,17 +136,17 @@ export function AdminDashboard() {
             <h1 className="text-2xl font-black text-slate-900 mt-1">Admin Dashboard</h1>
             <p className="text-xs text-slate-500">Live hospital operations, capacity metrics, and departmental statistics</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setAddDoctorOpen(true)}
-              className="px-3.5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+              className="flex-1 sm:flex-initial px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition cursor-pointer min-h-[44px]"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add Doctor</span>
             </button>
             <button
               onClick={() => setAddDeptOpen(true)}
-              className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+              className="flex-1 sm:flex-initial px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition cursor-pointer min-h-[44px]"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add Department</span>
@@ -311,68 +311,70 @@ export function AdminDashboard() {
             </div>
 
             <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-soft">
-              <table className="w-full text-xs text-left">
-                <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
-                  <tr>
-                    <th className="p-3.5">Doctor</th>
-                    <th className="p-3.5">Department</th>
-                    <th className="p-3.5">Experience</th>
-                    <th className="p-3.5">OPD Fee</th>
-                    <th className="p-3.5">Chamber</th>
-                    <th className="p-3.5">Status</th>
-                    <th className="p-3.5 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {doctors.map((doc, idx) => {
-                    const docId = doc._id || doc.id || `doc-${idx}`;
-                    const docName = doc.name || 'Specialist Doctor';
-                    const avatarUrl = doc.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
-                    const deptDisplay = typeof doc.department === 'string' ? doc.department : doc.department?.name || 'General Medicine';
-                    const docExp = doc.experience || (doc.experienceYears ? `${doc.experienceYears} Years` : '5+ Years');
-                    const docFee = doc.consultationFee ?? doc.fee ?? 500;
+              <div className="table-scroll-wrapper">
+                <table className="min-w-[650px] w-full text-xs text-left">
+                  <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                    <tr>
+                      <th className="p-3.5">Doctor</th>
+                      <th className="p-3.5">Department</th>
+                      <th className="p-3.5">Experience</th>
+                      <th className="p-3.5">OPD Fee</th>
+                      <th className="p-3.5">Chamber</th>
+                      <th className="p-3.5">Status</th>
+                      <th className="p-3.5 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {doctors.map((doc, idx) => {
+                      const docId = doc._id || doc.id || `doc-${idx}`;
+                      const docName = doc.name || 'Specialist Doctor';
+                      const avatarUrl = doc.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
+                      const deptDisplay = typeof doc.department === 'string' ? doc.department : doc.department?.name || 'General Medicine';
+                      const docExp = doc.experience || (doc.experienceYears ? `${doc.experienceYears} Years` : '5+ Years');
+                      const docFee = doc.consultationFee ?? doc.fee ?? 500;
 
-                    return (
-                      <tr key={docId} className="hover:bg-slate-50/80">
-                        <td className="p-3.5 flex items-center gap-3">
-                          <img
-                            src={avatarUrl}
-                            alt={docName}
-                            className="w-8 h-8 rounded-lg object-cover bg-sky-50 border border-slate-100"
-                            onError={(e) => {
-                              e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
-                            }}
-                          />
-                          <div>
-                            <span className="font-bold text-slate-900 block">{docName}</span>
-                            <span className="text-slate-400 text-[10px]">{doc.email}</span>
-                          </div>
-                        </td>
-                        <td className="p-3.5 font-semibold text-sky-700">{deptDisplay}</td>
-                        <td className="p-3.5 text-slate-600">{docExp}</td>
-                        <td className="p-3.5 font-bold text-slate-900">₹{docFee}</td>
-                        <td className="p-3.5 text-slate-600">{doc.room || 'OPD-102'}</td>
-                        <td className="p-3.5">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                            doc.available ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
-                          }`}>
-                            {doc.available ? 'Active' : 'Off-duty'}
-                          </span>
-                        </td>
-                        <td className="p-3.5 text-right">
-                          <button
-                            onClick={() => handleDeleteDoctor(docId, docName)}
-                            className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition cursor-pointer"
-                            title="Remove Doctor"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                      return (
+                        <tr key={docId} className="hover:bg-slate-50/80">
+                          <td className="p-3.5 flex items-center gap-3">
+                            <img
+                              src={avatarUrl}
+                              alt={docName}
+                              className="w-8 h-8 rounded-lg object-cover bg-sky-50 border border-slate-100"
+                              onError={(e) => {
+                                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(docName)}&background=0284c7&color=fff`;
+                              }}
+                            />
+                            <div>
+                              <span className="font-bold text-slate-900 block">{docName}</span>
+                              <span className="text-slate-400 text-[10px]">{doc.email}</span>
+                            </div>
+                          </td>
+                          <td className="p-3.5 font-semibold text-sky-700">{deptDisplay}</td>
+                          <td className="p-3.5 text-slate-600">{docExp}</td>
+                          <td className="p-3.5 font-bold text-slate-900">₹{docFee}</td>
+                          <td className="p-3.5 text-slate-600">{doc.room || 'OPD-102'}</td>
+                          <td className="p-3.5">
+                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                              doc.available ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
+                            }`}>
+                              {doc.available ? 'Active' : 'Off-duty'}
+                            </span>
+                          </td>
+                          <td className="p-3.5 text-right">
+                            <button
+                              onClick={() => handleDeleteDoctor(docId, docName)}
+                              className="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition cursor-pointer min-tap"
+                              title="Remove Doctor"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}
@@ -413,28 +415,30 @@ export function AdminDashboard() {
           <div className="space-y-4">
             <h3 className="text-base font-bold text-slate-900">Registered Patients Directory</h3>
             <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-soft">
-              <table className="w-full text-xs text-left">
-                <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
-                  <tr>
-                    <th className="p-3.5">Patient Name</th>
-                    <th className="p-3.5">Contact Phone</th>
-                    <th className="p-3.5">Blood Group</th>
-                    <th className="p-3.5">Age / Gender</th>
-                    <th className="p-3.5">Address</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {patients.map((p) => (
-                    <tr key={p.id}>
-                      <td className="p-3.5 font-bold text-slate-900">{p.name}</td>
-                      <td className="p-3.5 text-slate-600">{p.phone}</td>
-                      <td className="p-3.5 font-bold text-rose-600">{p.bloodGroup || 'B+'}</td>
-                      <td className="p-3.5 text-slate-600">{p.age || 34} Yrs • {p.gender || 'Male'}</td>
-                      <td className="p-3.5 text-slate-500 truncate max-w-xs">{p.address || 'Chennai'}</td>
+              <div className="table-scroll-wrapper">
+                <table className="min-w-[600px] w-full text-xs text-left">
+                  <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                    <tr>
+                      <th className="p-3.5">Patient Name</th>
+                      <th className="p-3.5">Contact Phone</th>
+                      <th className="p-3.5">Blood Group</th>
+                      <th className="p-3.5">Age / Gender</th>
+                      <th className="p-3.5">Address</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {patients.map((p) => (
+                      <tr key={p.id} className="hover:bg-slate-50/80">
+                        <td className="p-3.5 font-bold text-slate-900">{p.name}</td>
+                        <td className="p-3.5 text-slate-600">{p.phone}</td>
+                        <td className="p-3.5 font-bold text-rose-600">{p.bloodGroup || 'B+'}</td>
+                        <td className="p-3.5 text-slate-600">{p.age || 34} Yrs • {p.gender || 'Male'}</td>
+                        <td className="p-3.5 text-slate-500 truncate max-w-xs">{p.address || 'Chennai'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}
@@ -464,11 +468,11 @@ export function AdminDashboard() {
 
         {/* Add Doctor Modal */}
         {addDoctorOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-            <div className="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl border border-slate-100 space-y-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs">
+            <div className="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 shadow-2xl border border-slate-100 space-y-4 max-h-[92vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 className="font-bold text-slate-900">Add New Doctor to Faculty</h3>
-                <button onClick={() => setAddDoctorOpen(false)} className="text-slate-400 hover:text-slate-600 cursor-pointer">
+                <button onClick={() => setAddDoctorOpen(false)} className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer min-tap">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -481,18 +485,18 @@ export function AdminDashboard() {
                     value={newDoctor.name}
                     onChange={(e) => setNewDoctor({ ...newDoctor, name: e.target.value })}
                     placeholder="e.g. Dr. Rajesh Sundaram"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-hidden"
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                     required
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1">Department</label>
                     <select
                       value={newDoctor.department}
                       onChange={(e) => setNewDoctor({ ...newDoctor, department: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white focus:ring-2 focus:ring-sky-500 outline-hidden"
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs bg-white focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                     >
                       {departments.map(d => (
                         <option key={d.id} value={d.name}>{d.name}</option>
@@ -506,12 +510,12 @@ export function AdminDashboard() {
                       value={newDoctor.qualification}
                       onChange={(e) => setNewDoctor({ ...newDoctor, qualification: e.target.value })}
                       placeholder="e.g. MBBS, MS, MCh"
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-hidden"
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1">Experience</label>
                     <input
@@ -519,7 +523,7 @@ export function AdminDashboard() {
                       value={newDoctor.experience}
                       onChange={(e) => setNewDoctor({ ...newDoctor, experience: e.target.value })}
                       placeholder="e.g. 10 Years"
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-hidden"
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                     />
                   </div>
                   <div>
@@ -528,7 +532,7 @@ export function AdminDashboard() {
                       type="number"
                       value={newDoctor.fee}
                       onChange={(e) => setNewDoctor({ ...newDoctor, fee: Number(e.target.value) })}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-hidden"
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                     />
                   </div>
                   <div>
@@ -538,22 +542,22 @@ export function AdminDashboard() {
                       value={newDoctor.room}
                       onChange={(e) => setNewDoctor({ ...newDoctor, room: e.target.value })}
                       placeholder="Suite 204"
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-hidden"
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                     />
                   </div>
                 </div>
 
-                <div className="pt-2 flex justify-end gap-2">
+                <div className="pt-2 flex flex-col-reverse sm:flex-row justify-end gap-2">
                   <button
                     type="button"
                     onClick={() => setAddDoctorOpen(false)}
-                    className="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold cursor-pointer"
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold cursor-pointer min-h-[44px]"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold cursor-pointer min-h-[44px] shadow-xs"
                   >
                     Add Doctor
                   </button>
@@ -565,11 +569,11 @@ export function AdminDashboard() {
 
         {/* Add Department Modal */}
         {addDeptOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-            <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-100 space-y-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs">
+            <div className="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 shadow-2xl border border-slate-100 space-y-4 max-h-[92vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 className="font-bold text-slate-900">Add New Department</h3>
-                <button onClick={() => setAddDeptOpen(false)} className="text-slate-400 hover:text-slate-600 cursor-pointer">
+                <button onClick={() => setAddDeptOpen(false)} className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer min-tap">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -582,7 +586,7 @@ export function AdminDashboard() {
                     value={newDept.name}
                     onChange={(e) => setNewDept({ ...newDept, name: e.target.value })}
                     placeholder="e.g. Pulmonology"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-purple-500 outline-hidden"
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-purple-500 outline-hidden min-h-[44px]"
                     required
                   />
                 </div>
@@ -593,7 +597,7 @@ export function AdminDashboard() {
                     value={newDept.head}
                     onChange={(e) => setNewDept({ ...newDept, head: e.target.value })}
                     placeholder="e.g. Dr. K. Ramanathan"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-purple-500 outline-hidden"
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-purple-500 outline-hidden min-h-[44px]"
                   />
                 </div>
                 <div>
@@ -603,20 +607,20 @@ export function AdminDashboard() {
                     value={newDept.description}
                     onChange={(e) => setNewDept({ ...newDept, description: e.target.value })}
                     placeholder="Short description of treatments and services..."
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-purple-500 outline-hidden"
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs focus:ring-2 focus:ring-purple-500 outline-hidden"
                   />
                 </div>
-                <div className="pt-2 flex justify-end gap-2">
+                <div className="pt-2 flex flex-col-reverse sm:flex-row justify-end gap-2">
                   <button
                     type="button"
                     onClick={() => setAddDeptOpen(false)}
-                    className="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold cursor-pointer"
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold cursor-pointer min-h-[44px]"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold cursor-pointer min-h-[44px] shadow-xs"
                   >
                     Create Department
                   </button>

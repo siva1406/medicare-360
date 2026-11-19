@@ -44,18 +44,18 @@ export function Register() {
           <p className="text-xs text-slate-500">Create your secure MediCare 360 electronic health profile</p>
         </div>
 
-        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-soft">
+        <div className="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-soft">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
               <div className="relative">
-                <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <User className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Rajesh Kumar"
-                  className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                   required
                 />
               </div>
@@ -65,13 +65,13 @@ export function Register() {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="e.g. rajesh@example.com"
-                    className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                     required
                   />
                 </div>
@@ -79,14 +79,14 @@ export function Register() {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">Password *</label>
                 <div className="relative">
-                  <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                   <input
                     type="password"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     placeholder="Create a password (min 6 characters)"
                     minLength={6}
-                    className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                     required
                   />
                 </div>
@@ -97,11 +97,11 @@ export function Register() {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">Mobile Phone *</label>
                 <input
-                  type="text"
+                  type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="+91 98765 43210"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                   required
                 />
               </div>
@@ -111,7 +111,7 @@ export function Register() {
                   type="number"
                   value={formData.age}
                   onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                   required
                 />
               </div>
@@ -120,7 +120,7 @@ export function Register() {
                 <select
                   value={formData.bloodGroup}
                   onChange={(e) => setFormData({ ...formData, bloodGroup: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm bg-white focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                 >
                   <option value="A+">A+</option>
                   <option value="A-">A-</option>
@@ -137,13 +137,13 @@ export function Register() {
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Residential Address</label>
               <div className="relative">
-                <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                 <input
                   type="text"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   placeholder="Street, City, PIN code"
-                  className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
                 />
               </div>
             </div>
@@ -151,18 +151,18 @@ export function Register() {
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Emergency Contact Number</label>
               <input
-                type="text"
+                type="tel"
                 value={formData.emergencyContact}
                 onChange={(e) => setFormData({ ...formData, emergencyContact: e.target.value })}
                 placeholder="+91 98765 00000 (Spouse/Parent)"
-                className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 outline-hidden"
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:ring-2 focus:ring-sky-500 outline-hidden min-h-[44px]"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-50"
+              className="w-full py-3.5 px-4 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-sm shadow-md shadow-sky-600/30 flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-50 min-h-[44px]"
             >
               {loading ? 'Creating Patient Profile...' : 'Complete Registration'}
               <ArrowRight className="w-4 h-4" />
